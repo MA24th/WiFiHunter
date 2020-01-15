@@ -1,22 +1,23 @@
-#!/usr/bin/env python3
+import os
+import sys
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 try:
     from .config import Configuration
 except (ValueError, ImportError) as e:
-    raise Exception('You may need to run wifihunter from the root directory (which includes README.md)', e)
+    raise Exception(
+        'You may need to run wifihunter from the root directory (which includes README.md)', e)
 
-from .util.color import Color
-
-import os
-import sys
+from .utils.color import Color
 
 
 class WiFiHunter(object):
 
     def __init__(self):
-        '''
-        Initializes Wifihunter. Checks for root permissions and ensures dependencies are installed.
-        '''
+        '''Initializes Wifihunter. 
+        Checks for root permissions and ensures dependencies are installed.'''
 
         self.print_banner()
 
@@ -27,18 +28,16 @@ class WiFiHunter(object):
             Color.pl('{!} {R}re-run with {O}sudo{W}')
             Configuration.exit_gracefully(0)
 
-        from .tools.dependency import Dependency
+        from wifihunter.plugins.dependency import Dependency
         Dependency.run_dependency_check()
 
-
     def start(self):
-        '''
-        Starts target-scan + attack loop, or launches utilities dpeending on user input.
-        '''
-        from .model.result import CrackResult
-        from .model.handshake import Handshake
-        from .util.crack import CrackHelper
+        '''Starts target-scan + attack loop, 
+        OR launches utilities dpeending on user input.'''
 
+        from .handlers.result import CrackResult
+        from .handlers.handshake import Handshake
+        from .utils.crack import CrackHelper
         if Configuration.show_cracked:
             CrackResult.display()
 
@@ -52,38 +51,40 @@ class WiFiHunter(object):
             Configuration.get_monitor_mode_interface()
             self.scan_and_attack()
 
-
     def print_banner(self):
-        '''Displays ASCII art of the highest caliber.'''
-        Color.pl(r' {G}  .     {GR}{D}     {W}{G}     .    {W}')
-        Color.pl(r' {G}.´  ·  .{GR}{D}     {W}{G}.  ·  `.  {G}wifihunter {D}%s{W}' % Configuration.version)
-        Color.pl(r' {G}:  :  : {GR}{D} (¯) {W}{G} :  :  :  {W}{D}A WiFi Penetration ToolKit{W}')
-        Color.pl(r' {G}`.  ·  `{GR}{D} /¯\ {W}{G}´  ·  .´  {C}{D}https://github.com/ma24th/wifihunter{W}')
-        Color.pl(r' {G}  `     {GR}{D}/¯¯¯\{W}{G}     ´    {W}')
-        Color.pl('')
+        ''' Displays ASCII Art '''
 
+        Color.pl(r'{G}   **** {R}WiFiHunter{G} ****{W}')
+        Color.pl(r'{G} ,***. .*. {R}1.0{G} .*. .***,{W}')
+        Color.pl(r'{G}.***  ****     ****  ***.{W}')
+        Color.pl(r'{G}***, ***, ,***, ,*** ,***{W}')
+        Color.pl(r'{G}***. *** .*****. *** .***{W}')
+        Color.pl(r'{G}***, *\\, ,|||, ,//* ,***{W}')
+        Color.pl(r'{G}.\\\  \\\\.,.,.////  ///.{W}')
+        Color.pl(r'{G} .\\\, .,.,,,,,.,. ,///.{W}')
+        Color.pl(r'{G}   \\\*   {W},***,{G}   *///{W}')
+        Color.pl(r'{W}          ,***,{W} {O}Author:{P} Mustafa Asaad{W}')
+        Color.pl(r'{W}          ,***,{W} {O}Email:{P} ma24th@yahoo.com{W}')
+        Color.pl(r'=======================================')
 
     def scan_and_attack(self):
         '''
         1) Scans for targets, asks user to select targets
         2) Attacks each target
         '''
-        from .util.scanner import Scanner
-        from .attack.all import AttackAll
 
         Color.pl('')
-
+        from .utils.scanner import Scanner
         # Scan
         s = Scanner()
         targets = s.select_targets()
 
+        from .tools.all import AttackAll
         # Attack
         attacked_targets = AttackAll.attack_multiple(targets)
 
-        Color.pl('{+} Finished attacking {C}%d{W} target(s), exiting' % attacked_targets)
-
-
-##############################################################
+        Color.pl('{+} Finished attacking {C}%d{W} target(s), exiting' %
+                 attacked_targets)
 
 
 def entry_point():

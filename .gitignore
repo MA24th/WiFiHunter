@@ -1,4 +1,6 @@
 # Folders
 __pycache__
+wifihunter.egg-info
 
 # Files
+data.py

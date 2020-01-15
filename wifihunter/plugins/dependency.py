@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
 
 class Dependency(object):
     required_attr_names = ['dependency_name', 'dependency_url', 'dependency_required']
@@ -15,13 +18,13 @@ class Dependency(object):
 
     @classmethod
     def exists(cls):
-        from ..util.process import Process
+        from ..utils.process import Process
         return Process.exists(cls.dependency_name)
 
 
     @classmethod
     def run_dependency_check(cls):
-        from ..util.color import Color
+        from ..utils.color import Color
 
         from .airmon import Airmon
         from .airodump import Airodump
@@ -62,8 +65,8 @@ class Dependency(object):
 
     @classmethod
     def fails_dependency_check(cls):
-        from ..util.color import Color
-        from ..util.process import Process
+        from ..utils.color import Color
+        from ..utils.process import Process
 
         if Process.exists(cls.dependency_name):
             return False

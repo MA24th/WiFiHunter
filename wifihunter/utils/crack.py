@@ -1,25 +1,28 @@
-#!/usr/bin/env python3
-
-from ..config import Configuration
-from ..model.handshake import Handshake
-from ..model.wpa_result import CrackResultWPA
-from ..model.pmkid_result import CrackResultPMKID
-from ..util.process import Process
-from ..util.color import Color
-from ..util.input import raw_input
-from ..tools.aircrack import Aircrack
-from ..tools.cowpatty import Cowpatty
-from ..tools.hashcat import Hashcat, HcxPcapTool
-from ..tools.john import John
-
-from json import loads
-
 import os
 
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
+from json import loads
+from ..config import Configuration
+from ..handlers.handshake import Handshake
+from ..handlers.result import CrackResultWPA
+
+from ..handlers.result import CrackResultPMKID
+from ..utils.process import Process
+from ..utils.color import Color
+from ..utils.input import raw_input
+
+from ..plugins.aircrack import Aircrack
+from ..plugins.cowpatty import Cowpatty
+from ..plugins.hashcat import Hashcat, HcxPcapTool
+from ..plugins.john import John
 
 # TODO: Bring back the 'print' option, for easy copy/pasting. Just one-liners people can paste into terminal.
 
 # TODO: --no-crack option while attacking targets (implies user will run --crack later)
+
 
 class CrackHelper:
     '''Manages handshake retrieval, selection, and running the cracking commands.'''
@@ -38,7 +41,8 @@ class CrackHelper:
             Color.p('\n{+} Enter wordlist file to use for cracking: {G}')
             Configuration.wordlist = raw_input()
             if not os.path.exists(Configuration.wordlist):
-                Color.pl('{!} {R}Wordlist {O}%s{R} not found. Exiting.' % Configuration.wordlist)
+                Color.pl('{!} {R}Wordlist {O}%s{R} not found. Exiting.' %
+                         Configuration.wordlist)
                 return
             Color.pl('')
 
@@ -67,7 +71,7 @@ class CrackHelper:
             ]
             if len(missing) > 0:
                 available_tools.pop(tool)
-                missing_tools.append( (tool, missing) )
+                missing_tools.append((tool, missing))
 
         if len(missing_tools) > 0:
             Color.pl('\n{!} {O}Unavailable tools (install to enable):{W}')
@@ -76,21 +80,24 @@ class CrackHelper:
                 Color.pl('     {R}* {R}%s {W}({O}%s{W})' % (tool, dep_list))
 
         if all_pmkid:
-            Color.pl('{!} {O}Note: PMKID hashes can only be cracked using {C}hashcat{W}')
+            Color.pl(
+                '{!} {O}Note: PMKID hashes can only be cracked using {C}hashcat{W}')
             tool_name = 'hashcat'
         else:
             Color.p('\n{+} Enter the {C}cracking tool{W} to use ({C}%s{W}): {G}' % (
                 '{W}, {C}'.join(available_tools.keys())))
             tool_name = raw_input()
             if tool_name not in available_tools:
-                Color.pl('{!} {R}"%s"{O} tool not found, defaulting to {C}aircrack{W}' % tool_name)
+                Color.pl(
+                    '{!} {R}"%s"{O} tool not found, defaulting to {C}aircrack{W}' % tool_name)
                 tool_name = 'aircrack'
 
         try:
             for hs in hs_to_crack:
                 if tool_name != 'hashcat' and hs['type'] == 'PMKID':
                     if 'hashcat' in missing_tools:
-                        Color.pl('{!} {O}Hashcat is missing, therefore we cannot crack PMKID hash{W}')
+                        Color.pl(
+                            '{!} {O}Hashcat is missing, therefore we cannot crack PMKID hash{W}')
                 cls.crack(hs, tool_name)
         except KeyboardInterrupt:
             Color.pl('\n{!} {O}Interrupted{W}')
@@ -121,7 +128,8 @@ class CrackHelper:
             Color.pl('\n{!} {O}directory not found: {R}%s{W}' % hs_dir)
             return []
 
-        Color.pl('\n{+} Listing captured handshakes from {C}%s{W}:\n' % os.path.abspath(hs_dir))
+        Color.pl('\n{+} Listing captured handshakes from {C}%s{W}:\n' %
+                 os.path.abspath(hs_dir))
         for hs_file in os.listdir(hs_dir):
             if hs_file.count('_') != 3:
                 continue
@@ -144,7 +152,7 @@ class CrackHelper:
 
             name, essid, bssid, date = hs_file.split('_')
             date = date.rsplit('.', 1)[0]
-            days,hours = date.split('T')
+            days, hours = date.split('T')
             hours = hours.replace('-', ':')
             date = '%s %s' % (days, hours)
 
@@ -168,18 +176,20 @@ class CrackHelper:
             handshakes.append(handshake)
 
         if skipped_pmkid_files > 0:
-            Color.pl('{!} {O}Skipping %d {R}*.16800{O} files because {R}hashcat{O} is missing.{W}\n' % skipped_pmkid_files)
+            Color.pl(
+                '{!} {O}Skipping %d {R}*.16800{O} files because {R}hashcat{O} is missing.{W}\n' % skipped_pmkid_files)
         if skipped_cracked_files > 0:
-            Color.pl('{!} {O}Skipping %d already cracked files.{W}\n' % skipped_cracked_files)
+            Color.pl('{!} {O}Skipping %d already cracked files.{W}\n' %
+                     skipped_cracked_files)
 
         # Sort by Date (Descending)
         return sorted(handshakes, key=lambda x: x.get('date'), reverse=True)
 
-
     @classmethod
     def print_handshakes(cls, handshakes):
         # Header
-        max_essid_len = max([len(hs['essid']) for hs in handshakes] + [len('ESSID (truncated)')])
+        max_essid_len = max([len(hs['essid'])
+                             for hs in handshakes] + [len('ESSID (truncated)')])
         Color.p('{W}{D}  NUM')
         Color.p('  ' + 'ESSID (truncated)'.ljust(max_essid_len))
         Color.p('  ' + 'BSSID'.ljust(17))
@@ -197,7 +207,6 @@ class CrackHelper:
             Color.p('  {O}%s{W}' % handshake['bssid'].ljust(17))
             Color.p('  {C}%s{W}' % handshake['type'].ljust(5))
             Color.p('  {W}%s{W}\n' % handshake['date'])
-
 
     @classmethod
     def get_user_selection(cls, handshakes):
@@ -221,7 +230,6 @@ class CrackHelper:
 
         return selection
 
-
     @classmethod
     def crack(cls, hs, tool):
         Color.pl('\n{+} Cracking {G}%s {C}%s{W} ({C}%s{W})' % (
@@ -232,7 +240,8 @@ class CrackHelper:
         elif hs['type'] == '4-WAY':
             crack_result = cls.crack_4way(hs, tool)
         else:
-            raise ValueError('Cannot crack handshake: Type is not PMKID or 4-WAY. Handshake=%s' % hs)
+            raise ValueError(
+                'Cannot crack handshake: Type is not PMKID or 4-WAY. Handshake=%s' % hs)
 
         if crack_result is None:
             # Failed to crack
@@ -244,13 +253,12 @@ class CrackHelper:
                 hs['essid'], hs['bssid'], crack_result.key))
             crack_result.save()
 
-
     @classmethod
     def crack_4way(cls, hs, tool):
 
         handshake = Handshake(hs['filename'],
-                bssid=hs['bssid'],
-                essid=hs['essid'])
+                              bssid=hs['bssid'],
+                              essid=hs['essid'])
         try:
             handshake.divine_bssid_and_essid()
         except ValueError as e:
@@ -271,11 +279,11 @@ class CrackHelper:
         else:
             return None
 
-
     @classmethod
     def crack_pmkid(cls, hs, tool):
         if tool != 'hashcat':
-            Color.pl('{!} {O}Note: PMKID hashes can only be cracked using {C}hashcat{W}')
+            Color.pl(
+                '{!} {O}Note: PMKID hashes can only be cracked using {C}hashcat{W}')
 
         key = Hashcat.crack_pmkid(hs['filename'], verbose=True)
 
@@ -287,4 +295,3 @@ class CrackHelper:
 
 if __name__ == '__main__':
     CrackHelper.run()
-

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from ..util.process import Process
-from ..util.color import Color
+from ..utils.process import Process
+from ..utils.color import Color
 from ..plugins.tshark import Tshark
 from ..plugins.pyrit import Pyrit
 

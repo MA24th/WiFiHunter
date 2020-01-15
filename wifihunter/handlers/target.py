@@ -1,8 +1,9 @@
-#!/usr/bin/env python3
-
-from ..util.color import Color
-
 import re
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
+from ..utils.color import Color
 
 
 class WPSState:
@@ -36,10 +37,10 @@ class Target(object):
                     13 ESSID          (HOME-ABCD)
                     14 Key            ()
         '''
-        self.bssid      =     fields[0].strip()
-        self.channel    =     fields[3].strip()
+        self.bssid = fields[0].strip()
+        self.channel = fields[3].strip()
 
-        self.encryption =     fields[5].strip()
+        self.encryption = fields[5].strip()
         if 'WPA' in self.encryption:
             self.encryption = 'WPA'
         elif 'WEP' in self.encryption:
@@ -47,26 +48,26 @@ class Target(object):
         if len(self.encryption) > 4:
             self.encryption = self.encryption[0:4].strip()
 
-        self.power      = int(fields[8].strip())
+        self.power = int(fields[8].strip())
         if self.power < 0:
             self.power += 100
 
-        self.beacons    = int(fields[9].strip())
-        self.ivs        = int(fields[10].strip())
+        self.beacons = int(fields[9].strip())
+        self.ivs = int(fields[10].strip())
 
         self.essid_known = True
-        self.essid_len   = int(fields[12].strip())
-        self.essid       =     fields[13]
+        self.essid_len = int(fields[12].strip())
+        self.essid = fields[13]
         if self.essid == '\\x00' * self.essid_len or \
                 self.essid == 'x00' * self.essid_len or \
                 self.essid.strip() == '':
             # Don't display '\x00...' for hidden ESSIDs
-            self.essid = None # '(%s)' % self.bssid
+            self.essid = None  # '(%s)' % self.bssid
             self.essid_known = False
 
         self.wps = WPSState.UNKNOWN
 
-        self.decloaked = False # If ESSID was hidden but we decloaked it.
+        self.decloaked = False  # If ESSID was hidden but we decloaked it.
 
         self.clients = []
 
@@ -78,13 +79,17 @@ class Target(object):
             raise Exception('Ignoring target with Negative-One (-1) channel')
 
         # Filter broadcast/multicast BSSIDs, see https://github.com/derv82/wifite2/issues/32
-        bssid_broadcast = re.compile(r'^(ff:ff:ff:ff:ff:ff|00:00:00:00:00:00)$', re.IGNORECASE)
+        bssid_broadcast = re.compile(
+            r'^(ff:ff:ff:ff:ff:ff|00:00:00:00:00:00)$', re.IGNORECASE)
         if bssid_broadcast.match(self.bssid):
-            raise Exception('Ignoring target with Broadcast BSSID (%s)' % self.bssid)
+            raise Exception(
+                'Ignoring target with Broadcast BSSID (%s)' % self.bssid)
 
-        bssid_multicast = re.compile(r'^(01:00:5e|01:80:c2|33:33)', re.IGNORECASE)
+        bssid_multicast = re.compile(
+            r'^(01:00:5e|01:80:c2|33:33)', re.IGNORECASE)
         if bssid_multicast.match(self.bssid):
-            raise Exception('Ignoring target with Multicast BSSID (%s)' % self.bssid)
+            raise Exception(
+                'Ignoring target with Multicast BSSID (%s)' % self.bssid)
 
     def to_str(self, show_bssid=False):
         '''
@@ -129,7 +134,7 @@ class Target(object):
 
         power = '%sdb' % str(self.power).rjust(3)
         if self.power > 50:
-            color ='G'
+            color = 'G'
         elif self.power > 35:
             color = 'O'
         else:
@@ -150,15 +155,15 @@ class Target(object):
             clients = Color.s('{G}  ' + str(len(self.clients)))
 
         result = '%s  %s%s  %s  %s  %s  %s' % (
-                essid, bssid, channel, encryption, power, wps, clients)
+            essid, bssid, channel, encryption, power, wps, clients)
         result += Color.s('{W}')
         return result
 
 
 if __name__ == '__main__':
-    fields = 'AA:BB:CC:DD:EE:FF,2015-05-27 19:28:44,2015-05-27 19:28:46,1,54,WPA2,CCMP TKIP,PSK,-58,2,0,0.0.0.0,9,HOME-ABCD,'.split(',')
+    fields = 'AA:BB:CC:DD:EE:FF,2015-05-27 19:28:44,2015-05-27 19:28:46,1,54,WPA2,CCMP TKIP,PSK,-58,2,0,0.0.0.0,9,HOME-ABCD,'.split(
+        ',')
     t = Target(fields)
     t.clients.append('asdf')
     t.clients.append('asdf')
     print(t.to_str())
-

@@ -1,16 +1,20 @@
-#!/usr/bin/env python3
-
-from ..model.attack import Attack
-from ..config import Configuration
-from ..tools.hashcat import HcxDumpTool, HcxPcapTool, Hashcat
-from ..util.color import Color
-from ..util.timer import Timer
-from ..model.pmkid_result import CrackResultPMKID
-
-from threading import Thread
 import os
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
 import time
 import re
+from ..handlers.attack import Attack
+from ..config import Configuration
+
+from ..plugins.hashcat import HcxDumpTool, HcxPcapTool, Hashcat
+from ..utils.color import Color
+from ..utils.timer import Timer
+from ..handlers.result import CrackResultPMKID
+
+from threading import Thread
+from ..utils.process import Process
 
 
 class AttackPMKID(Attack):
@@ -61,7 +65,7 @@ class AttackPMKID(Attack):
         Returns:
             True if handshake is captured. False otherwise.
         '''
-        from ..util.process import Process
+        
         # Check that we have all hashcat programs
         dependencies = [
             Hashcat.dependency_name,

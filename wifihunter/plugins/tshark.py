@@ -1,8 +1,10 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 from .dependency import Dependency
-from ..model.target import WPSState
-from ..util.process import Process
+from ..handlers.target import WPSState
+from ..utils.process import Process
 import re
 
 class Tshark(Dependency):
@@ -207,7 +209,7 @@ if __name__ == '__main__':
     test_file = './tests/files/contains_wps_network.cap'
 
     target_bssid = 'A4:2B:8C:16:6B:3A'
-    from ..model.target import Target
+    from ..handlers.target import Target
     fields = [
         'A4:2B:8C:16:6B:3A', # BSSID
         '2015-05-27 19:28:44', '2015-05-27 19:28:46', # Dates

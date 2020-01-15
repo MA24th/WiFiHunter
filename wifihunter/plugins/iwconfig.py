@@ -1,33 +1,34 @@
-#!/usr/bin/env python3
-
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 from .dependency import Dependency
+
 
 class Iwconfig(Dependency):
     dependency_required = True
     dependency_name = 'iwconfig'
     dependency_url = 'apt-get install wireless-tools'
 
-
     @classmethod
     def mode(cls, iface, mode_name):
-        from ..util.process import Process
+        from ..utils.process import Process
 
         pid = Process(['iwconfig', iface, 'mode', mode_name])
         pid.wait()
 
         return pid.poll()
 
-
     @classmethod
     def get_interfaces(cls, mode=None):
-        from ..util.process import Process
+        from ..utils.process import Process
 
         interfaces = set()
         iface = ''
 
         (out, err) = Process.call('iwconfig')
         for line in out.split('\n'):
-            if len(line) == 0: continue
+            if len(line) == 0:
+                continue
 
             if not line.startswith(' '):
                 iface = line.split(' ')[0]
@@ -45,4 +46,3 @@ class Iwconfig(Dependency):
                 interfaces.add(iface)
 
         return list(interfaces)
-

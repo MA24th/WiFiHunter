@@ -1,12 +1,16 @@
-#!/usr/bin/env python3
+from time import sleep, time
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
-from ..util.color import Color
-from ..tools.airodump import Airodump
-from ..util.input import raw_input, xrange
-from ..model.target import Target, WPSState
+from ..plugins.airodump import Airodump
+from ..utils.input import raw_input, xrange
+from ..handlers.target import Target, WPSState
 from ..config import Configuration
 
-from time import sleep, time
+from ..utils.color import Color
+from ..utils.process import Process
+
 
 class Scanner(object):
     ''' Scans wifi networks & provides menu for selecting targets '''
@@ -22,7 +26,7 @@ class Scanner(object):
         '''
         self.previous_target_count = 0
         self.targets = []
-        self.target = None # Target specified by user (based on ESSID/BSSID)
+        self.target = None  # Target specified by user (based on ESSID/BSSID)
 
         max_scan_time = Configuration.scan_time
 
@@ -38,7 +42,8 @@ class Scanner(object):
                     if airodump.pid.poll() is not None:
                         return  # Airodump process died
 
-                    self.targets = airodump.get_targets(old_targets=self.targets)
+                    self.targets = airodump.get_targets(
+                        old_targets=self.targets)
 
                     if self.found_target():
                         return  # We found the target we want
@@ -73,7 +78,6 @@ class Scanner(object):
         except KeyboardInterrupt:
             pass
 
-
     def found_target(self):
         '''
         Detect if we found a target specified by the user (optional).
@@ -98,11 +102,10 @@ class Scanner(object):
 
         if self.target:
             Color.pl('\n{+} {C}found target{G} %s {W}({G}%s{W})'
-                % (self.target.bssid, self.target.essid))
+                     % (self.target.bssid, self.target.essid))
             return True
 
         return False
-
 
     def print_targets(self):
         '''Prints targets selection menu (1 target per row).'''
@@ -120,12 +123,12 @@ class Scanner(object):
                     # 1) We have less targets than before, so we can't overwrite the previous list
                     # 2) The terminal can't display the targets without scrolling.
                     # Clear the screen.
-                    from ..util.process import Process
                     Process.call('clear')
                 else:
                     # We can fit the targets in the terminal without scrolling
                     # 'Move' cursor up so we will print over the previous list
-                    Color.pl(Scanner.UP_CHAR * (3 + self.previous_target_count))
+                    Color.pl(Scanner.UP_CHAR *
+                             (3 + self.previous_target_count))
 
         self.previous_target_count = len(self.targets)
 
@@ -184,8 +187,8 @@ class Scanner(object):
             # 2. How to check if your device supporst monitor mode,
             # 3. Provide airodump-ng command being executed.
             raise Exception('No targets found.'
-                + ' You may need to wait longer,'
-                + ' or you may have issues with your wifi card')
+                            + ' You may need to wait longer,'
+                            + ' or you may have issues with your wifi card')
 
         # Return all targets if user specified a wait time ('pillage').
         if Configuration.scan_time > 0:
@@ -198,7 +201,7 @@ class Scanner(object):
         if self.err_msg is not None:
             Color.pl(self.err_msg)
 
-        input_str  = '{+} select target(s)'
+        input_str = '{+} select target(s)'
         input_str += ' ({G}1-%d{W})' % len(self.targets)
         input_str += ' separated by commas, dashes'
         input_str += ' or {G}all{W}: '
@@ -212,7 +215,7 @@ class Scanner(object):
                 break
             if '-' in choice:
                 # User selected a range
-                (lower,upper) = [int(x) - 1 for x in choice.split('-')]
+                (lower, upper) = [int(x) - 1 for x in choice.split('-')]
                 for i in xrange(lower, min(len(self.targets), upper + 1)):
                     chosen_targets.append(self.targets[i])
             elif choice.isdigit():
@@ -234,4 +237,3 @@ if __name__ == '__main__':
     for t in targets:
         Color.pl('    {W}Selected: %s' % t)
     Configuration.exit_gracefully(0)
-

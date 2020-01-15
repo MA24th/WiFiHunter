@@ -1,8 +1,9 @@
-#!/usr/bin/env python3
-
 import re
-
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 from .dependency import Dependency
+
 
 class Ifconfig(Dependency):
     dependency_required = True
@@ -12,7 +13,7 @@ class Ifconfig(Dependency):
     @classmethod
     def up(cls, interface, args=[]):
         '''Put interface up'''
-        from ..util.process import Process
+        from ..utils.process import Process
 
         command = ['ifconfig', interface]
         if type(args) is list:
@@ -24,23 +25,23 @@ class Ifconfig(Dependency):
         pid = Process(command)
         pid.wait()
         if pid.poll() != 0:
-            raise Exception('Error putting interface %s up:\n%s\n%s' % (interface, pid.stdout(), pid.stderr()))
-
+            raise Exception('Error putting interface %s up:\n%s\n%s' %
+                            (interface, pid.stdout(), pid.stderr()))
 
     @classmethod
     def down(cls, interface):
         '''Put interface down'''
-        from ..util.process import Process
+        from ..utils.process import Process
 
         pid = Process(['ifconfig', interface, 'down'])
         pid.wait()
         if pid.poll() != 0:
-            raise Exception('Error putting interface %s down:\n%s\n%s' % (interface, pid.stdout(), pid.stderr()))
-
+            raise Exception('Error putting interface %s down:\n%s\n%s' % (
+                interface, pid.stdout(), pid.stderr()))
 
     @classmethod
     def get_mac(cls, interface):
-        from ..util.process import Process
+        from ..utils.process import Process
 
         output = Process(['ifconfig', interface]).stdout()
 
@@ -57,4 +58,3 @@ class Ifconfig(Dependency):
             return match.group(1)
 
         raise Exception('Could not find the mac address for %s' % interface)
-

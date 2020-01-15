@@ -1,11 +1,14 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
-from ..model.attack import Attack
-from ..util.color import Color
-from ..util.process import Process
+from ..handlers.attack import Attack
+from ..utils.color import Color
+from ..utils.process import Process
 from ..config import Configuration
-from ..tools.bully import Bully
-from ..tools.reaver import Reaver
+from ..plugins.bully import Bully
+from ..plugins.reaver import Reaver
+
 
 class AttackWPS(Attack):
 
@@ -33,13 +36,13 @@ class AttackWPS(Attack):
 
         if not Configuration.wps_pixie and self.pixie_dust:
             Color.pl('\r{!} {O}--no-pixie{R} was given, ignoring WPS PIN Attack on ' +
-                    '{O}%s{W}' % self.target.essid)
+                     '{O}%s{W}' % self.target.essid)
             self.success = False
             return False
 
         if not Configuration.wps_pin and not self.pixie_dust:
             Color.pl('\r{!} {O}--no-pin{R} was given, ignoring WPS Pixie-Dust Attack ' +
-                    'on {O}%s{W}' % self.target.essid)
+                     'on {O}%s{W}' % self.target.essid)
             self.success = False
             return False
 
@@ -55,17 +58,19 @@ class AttackWPS(Attack):
         elif not Reaver.exists():
             # Print error if reaver isn't found (bully not available)
             if self.pixie_dust:
-                Color.pl('\r{!} {R}Skipping WPS Pixie-Dust attack: {O}reaver{R} not found.{W}')
+                Color.pl(
+                    '\r{!} {R}Skipping WPS Pixie-Dust attack: {O}reaver{R} not found.{W}')
             else:
-                Color.pl('\r{!} {R}Skipping WPS PIN attack: {O}reaver{R} not found.{W}')
+                Color.pl(
+                    '\r{!} {R}Skipping WPS PIN attack: {O}reaver{R} not found.{W}')
             return False
         elif self.pixie_dust and not Reaver.is_pixiedust_supported():
             # Print error if reaver can't support pixie-dust (bully not available)
-            Color.pl('\r{!} {R}Skipping WPS attack: {O}reaver{R} does not support {O}--pixie-dust{W}')
+            Color.pl(
+                '\r{!} {R}Skipping WPS attack: {O}reaver{R} does not support {O}--pixie-dust{W}')
             return False
         else:
             return self.run_reaver()
-
 
     def run_bully(self):
         bully = Bully(self.target, pixie_dust=self.pixie_dust)
@@ -75,11 +80,9 @@ class AttackWPS(Attack):
         self.success = self.crack_result is not None
         return self.success
 
-
     def run_reaver(self):
         reaver = Reaver(self.target, pixie_dust=self.pixie_dust)
         reaver.run()
         self.crack_result = reaver.crack_result
         self.success = self.crack_result is not None
         return self.success
-

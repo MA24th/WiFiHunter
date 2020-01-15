@@ -1,16 +1,21 @@
-#!/usr/bin/env python
+import re
+import os
+import signal
+
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 from .dependency import Dependency
 from .ifconfig import Ifconfig
 from .iwconfig import Iwconfig
-from ..util.process import Process
-from ..util.color import Color
-from ..util.input import raw_input
+from ..utils.process import Process
+
+from ..utils.color import Color
+from ..utils.input import raw_input
 from ..config import Configuration
 
-import re
-import os
-import signal
+
 
 class AirmonIface(object):
     def __init__(self, phy, interface, driver, chipset):
@@ -282,7 +287,7 @@ class Airmon(Dependency):
             # Assume we're using the device already in montior mode
             iface = monitor_interfaces[0]
             Color.clear_entire_line()
-            Color.pl('{+} Using {G}%s{W} already in monitor mode' % iface);
+            Color.pl('{+} Using {G}%s{W} already in monitor mode' % iface)
             Airmon.base_interface = None
             return iface
 

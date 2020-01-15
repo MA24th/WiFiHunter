@@ -1,12 +1,14 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 from .dependency import Dependency
 from .airodump import Airodump
-from ..model.attack import Attack
-from ..model.wps_result import CrackResultWPS
-from ..util.color import Color
-from ..util.timer import Timer
-from ..util.process import Process
+from ..handlers.attack import Attack
+from ..handlers.result import CrackResultWPS
+from ..utils.color import Color
+from ..utils.timer import Timer
+from ..utils.process import Process
 from ..config import Configuration
 
 import os, time, re
@@ -392,7 +394,7 @@ class Bully(Attack, Dependency):
 if __name__ == '__main__':
     Configuration.initialize()
     Configuration.interface = 'wlan0mon'
-    from ..model.target import Target
+    from ..handlers.target import Target
     fields = '34:21:09:01:92:7C,2015-05-27 19:28:44,2015-05-27 19:28:46,1,54,WPA2,CCMP TKIP,PSK,-58,2,0,0.0.0.0,9,AirLink89300,'.split(',')
     target = Target(fields)
     psk = Bully.get_psk_from_pin(target, '01030365')

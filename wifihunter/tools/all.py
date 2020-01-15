@@ -1,11 +1,15 @@
-#!/usr/bin/env python3
+from ..config import Configuration
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 from .wep import AttackWEP
 from .wpa import AttackWPA
 from .wps import AttackWPS
 from .pmkid import AttackPMKID
-from ..config import Configuration
-from ..util.color import Color
+
+from ..utils.color import Color
+from ..utils.input import raw_input
 
 class AttackAll(object):
 
@@ -136,7 +140,6 @@ class AttackAll(object):
         options += '{R}e{W})'
         prompt += ' or {R}exit{W} %s? {C}' % options
 
-        from ..util.input import raw_input
         answer = raw_input(Color.s(prompt)).lower()
 
         if answer.startswith('s'):

@@ -1,8 +1,10 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 from .dependency import Dependency
-from ..util.process import Process
-from ..util.input import xrange
+from ..utils.process import Process
+from ..utils.input import xrange
 from ..config import Configuration
 
 import os
@@ -80,8 +82,8 @@ class Aircrack(Dependency):
 
     @staticmethod
     def crack_handshake(handshake, show_command=False):
-        from ..util.color import Color
-        from ..util.timer import Timer
+        from ..utils.color import Color
+        from ..utils.timer import Timer
         '''Tries to crack a handshake. Returns WPA key if found, otherwise None.'''
 
         key_file = Configuration.temp('wpakey.txt')

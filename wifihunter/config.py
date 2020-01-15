@@ -1,12 +1,18 @@
-#!/usr/bin/env python3
-
 import os
-from .util.color import Color
-from .tools.macchanger import Macchanger
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
+# 
+# 
+from .utils.color import Color
+from .plugins.macchanger import Macchanger
+
+
 
 class Configuration(object):
     ''' Stores configuration variables and functions for Wifite. '''
-    version = '1.0.0'
+    version = '2.2.5'
 
     initialized = False # Flag indicating config has been initialized
     temp_dir = None     # Temporary directory
@@ -126,7 +132,7 @@ class Configuration(object):
     def get_monitor_mode_interface(cls):
         if cls.interface is None:
             # Interface wasn't defined, select it!
-            from .tools.airmon import Airmon
+            from .plugins.airmon import Airmon
             cls.interface = Airmon.ask()
             if cls.random_mac:
                 Macchanger.random()
@@ -134,8 +140,8 @@ class Configuration(object):
     @classmethod
     def load_from_arguments(cls):
         ''' Sets configuration values based on Argument.args object '''
+        
         from .args import Arguments
-
         args = Arguments(cls).args
         cls.parse_settings_args(args)
         cls.parse_wep_args(args)
@@ -163,7 +169,7 @@ class Configuration(object):
 
     @classmethod
     def validate(cls):
-        if cls.use_pmkid_only and cls.wps_only:
+        if cls.use_pmkid_only and cls.wps_only:  
             Color.pl('{!} {R}Bad Configuration:{O} --pmkid and --wps-only are not compatible')
             raise RuntimeError('Unable to attack networks: --pmkid and --wps-only are not compatible together')
 
@@ -286,13 +292,13 @@ class Configuration(object):
         if args.wordlist:
             if not os.path.exists(args.wordlist):
                 cls.wordlist = None
-                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} was not found, WiFiHunter will NOT attempt to crack handshakes' % args.wordlist)
+                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} was not found, wifite will NOT attempt to crack handshakes' % args.wordlist)
             elif os.path.isfile(args.wordlist):
                 cls.wordlist = args.wordlist
                 Color.pl('{+} {C}option:{W} using wordlist {G}%s{W} to crack WPA handshakes' % args.wordlist)
             elif os.path.isdir(args.wordlist):
                 cls.wordlist = None
-                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} is a directory, not a file. WiFiHunter will NOT attempt to crack handshakes' % args.wordlist)
+                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} is a directory, not a file. Wifite will NOT attempt to crack handshakes' % args.wordlist)
 
         if args.wpa_deauth_timeout:
             cls.wpa_deauth_timeout = args.wpa_deauth_timeout
@@ -353,7 +359,7 @@ class Configuration(object):
                     '(no {O}Pixie-Dust{W}) on targets')
 
         if args.use_bully:
-            from .tools.bully import Bully
+            from .plugins.bully import Bully
             if not Bully.exists():
                 Color.pl('{!} {R}Bully not found. Defaulting to {O}reaver{W}')
                 cls.use_bully = False
@@ -450,7 +456,7 @@ class Configuration(object):
     def create_temp():
         ''' Creates and returns a temporary directory '''
         from tempfile import mkdtemp
-        tmp = mkdtemp(prefix='wifihunter')
+        tmp = mkdtemp(prefix='wifite')
         if not tmp.endswith(os.sep):
             tmp += os.sep
         return tmp
@@ -470,7 +476,7 @@ class Configuration(object):
         ''' Deletes temp and exist with the given code '''
         cls.delete_temp()
         Macchanger.reset_if_changed()
-        from .tools.airmon import Airmon
+        from .plugins.airmon import Airmon
         if cls.interface is not None and Airmon.base_interface is not None:
             Color.pl('{!} {O}Note:{W} Leaving interface in Monitor Mode!')
             Color.pl('{!} To disable Monitor Mode when finished: ' +
@@ -490,7 +496,7 @@ class Configuration(object):
     @classmethod
     def dump(cls):
         ''' (Colorful) string representation of the configuration '''
-        from .util.color import Color
+        
 
         max_len = 20
         for key in cls.__dict__.keys():

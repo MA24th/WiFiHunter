@@ -1,21 +1,23 @@
-#!/usr/bin/env python3
-
 import sys
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
 
 class Color(object):
     ''' Helper object for easily printing colored text to the terminal. '''
 
     # Basic console colors
     colors = {
-        'W' : '\033[0m',  # white (normal)
-        'R' : '\033[31m', # red
-        'G' : '\033[32m', # green
-        'O' : '\033[33m', # orange
-        'B' : '\033[34m', # blue
-        'P' : '\033[35m', # purple
-        'C' : '\033[36m', # cyan
-        'GR': '\033[37m', # gray
-        'D' : '\033[2m'   # dims current color. {W} resets.
+        'W': '\033[0m',  # white (normal)
+        'R': '\033[31m',  # red
+        'G': '\033[32m',  # green
+        'O': '\033[33m',  # orange
+        'B': '\033[34m',  # blue
+        'P': '\033[35m',  # purple
+        'C': '\033[36m',  # cyan
+        'GR': '\033[37m',  # gray
+        'D': '\033[2m'   # dims current color. {W} resets.
     }
 
     # Helper string replacements
@@ -58,9 +60,9 @@ class Color(object):
     def s(text):
         ''' Returns colored string '''
         output = text
-        for (key,value) in Color.replacements.items():
+        for (key, value) in Color.replacements.items():
             output = output.replace(key, value)
-        for (key,value) in Color.colors.items():
+        for (key, value) in Color.colors.items():
             output = output.replace('{%s}' % key, value)
         return output
 
@@ -77,7 +79,6 @@ class Color(object):
         (rows, columns) = os.popen('stty size', 'r').read().split()
         Color.p('\r' + (' ' * int(columns)) + '\r')
 
-
     @staticmethod
     def pattack(attack_type, target, attack_name, progress):
         '''
@@ -89,7 +90,6 @@ class Color(object):
         essid = '{C}%s{W}' % target.essid if target.essid_known else '{O}unknown{W}'
         Color.p('\r{+} {G}%s{W} ({C}%sdb{W}) {G}%s {C}%s{W}: %s ' % (
             essid, target.power, attack_type, attack_name, progress))
-
 
     @staticmethod
     def pexception(exception):
@@ -117,4 +117,3 @@ if __name__ == '__main__':
     print(Color.s('{C}Testing{P}String{W}'))
     Color.pl('{+} Good line')
     Color.pl('{!} Danger')
-

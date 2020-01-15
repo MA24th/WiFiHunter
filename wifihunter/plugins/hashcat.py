@@ -1,9 +1,11 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 from .dependency import Dependency
 from ..config import Configuration
-from ..util.process import Process
-from ..util.color import Color
+from ..utils.process import Process
+from ..utils.color import Color
 
 import os
 

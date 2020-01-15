@@ -1,12 +1,13 @@
-#!/usr/bin/env python3
-
 import time
-import signal
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
 import os
-
+import signal
 from subprocess import Popen, PIPE
+from ..utils.color import Color
 
-from ..util.color import Color
 from ..config import Configuration
 
 
@@ -39,14 +40,17 @@ class Process(object):
         (stdout, stderr) = pid.communicate()
 
         # Python 3 compatibility
-        if type(stdout) is bytes: stdout = stdout.decode('utf-8')
-        if type(stderr) is bytes: stderr = stderr.decode('utf-8')
-
+        if type(stdout) is bytes:
+            stdout = stdout.decode('utf-8')
+        if type(stderr) is bytes:
+            stderr = stderr.decode('utf-8')
 
         if Configuration.verbose > 1 and stdout is not None and stdout.strip() != '':
-            Color.pe('{P} [stdout] %s{W}' % '\n [stdout] '.join(stdout.strip().split('\n')))
+            Color.pe('{P} [stdout] %s{W}' %
+                     '\n [stdout] '.join(stdout.strip().split('\n')))
         if Configuration.verbose > 1 and stderr is not None and stderr.strip() != '':
-            Color.pe('{P} [stderr] %s{W}' % '\n [stderr] '.join(stderr.strip().split('\n')))
+            Color.pe('{P} [stderr] %s{W}' %
+                     '\n [stderr] '.join(stderr.strip().split('\n')))
 
         return (stdout, stderr)
 
@@ -85,7 +89,8 @@ class Process(object):
 
         self.start_time = time.time()
 
-        self.pid = Popen(command, stdout=sout, stderr=serr, stdin=stdin, cwd=cwd, bufsize=bufsize)
+        self.pid = Popen(command, stdout=sout, stderr=serr,
+                         stdin=stdin, cwd=cwd, bufsize=bufsize)
 
     def __del__(self):
         '''
@@ -102,14 +107,16 @@ class Process(object):
         ''' Waits for process to finish, returns stdout output '''
         self.get_output()
         if Configuration.verbose > 1 and self.out is not None and self.out.strip() != '':
-            Color.pe('{P} [stdout] %s{W}' % '\n [stdout] '.join(self.out.strip().split('\n')))
+            Color.pe('{P} [stdout] %s{W}' %
+                     '\n [stdout] '.join(self.out.strip().split('\n')))
         return self.out
 
     def stderr(self):
         ''' Waits for process to finish, returns stderr output '''
         self.get_output()
         if Configuration.verbose > 1 and self.err is not None and self.err.strip() != '':
-            Color.pe('{P} [stderr] %s{W}' % '\n [stderr] '.join(self.err.strip().split('\n')))
+            Color.pe('{P} [stderr] %s{W}' %
+                     '\n [stderr] '.join(self.err.strip().split('\n')))
         return self.err
 
     def stdoutln(self):
@@ -161,7 +168,8 @@ class Process(object):
                 cmd = ' '.join(cmd)
 
             if Configuration.verbose > 1:
-                Color.pe('\n {C}[?] {W} sending interrupt to PID %d (%s)' % (pid, cmd))
+                Color.pe(
+                    '\n {C}[?] {W} sending interrupt to PID %d (%s)' % (pid, cmd))
 
             os.kill(pid, signal.SIGINT)
 
@@ -172,7 +180,8 @@ class Process(object):
                 if time.time() - start_time > wait_time:
                     # We waited too long for process to die, terminate it.
                     if Configuration.verbose > 1:
-                        Color.pe('\n {C}[?] {W} Waited > %0.2f seconds for process to die, killing it' % wait_time)
+                        Color.pe(
+                            '\n {C}[?] {W} Waited > %0.2f seconds for process to die, killing it' % wait_time)
                     os.kill(pid, signal.SIGTERM)
                     self.pid.terminate()
                     break
@@ -210,4 +219,3 @@ if __name__ == '__main__':
     time.sleep(1)
     print('yes should stop now')
     # After program loses reference to instance in 'p', process dies.
-

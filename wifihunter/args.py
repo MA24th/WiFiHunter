@@ -1,10 +1,13 @@
-#!/usr/bin/env python3
+import sys
+import argparse
+from .utils.color import Color
 
-from .util.color import Color
-import argparse, sys
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 class Arguments(object):
-    ''' Holds arguments used by the Wifite '''
+    ''' Holds arguments '''
 
     def __init__(self, configuration):
         # Hack: Check for -v before parsing args; so we know which commands to display.
@@ -466,11 +469,12 @@ class Arguments(object):
             dest='crack_handshake',
             help=Color.s('Show commands to crack a captured handshake'))
 
-if __name__ == '__main__':
-    from .util.color import Color
-    from .config import Configuration
-    Configuration.initialize(False)
-    a = Arguments(Configuration)
-    args = a.args
-    for (key,value) in sorted(args.__dict__.items()):
-        Color.pl('{C}%s: {G}%s{W}' % (key.ljust(21),value))
+
+# if __name__ == '__main__':
+
+#     from .config import Configuration
+#     Configuration.initialize(False)
+#     a = Arguments(Configuration)
+#     args = a.args
+#     for (key,value) in sorted(args.__dict__.items()):
+#         Color.pl('{C}%s: {G}%s{W}' % (key.ljust(21),value))

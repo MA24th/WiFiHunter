@@ -1,10 +1,15 @@
-#!/usr/bin/env python3
 from setuptools import setup
 from io import open
+
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
+
 
 def read(filename):
     with open(filename, encoding='utf-8') as file:
         return file.read()
+
 
 setup(name='wifihunter',
       version='1.0.0',
@@ -17,8 +22,8 @@ setup(name='wifihunter',
       packages=['wifihunter'],
       license='GPLv2',
       keywords='wifi penetration toolkit',
-    #   install_requires=[],
-    #   extras_require={},
+      #   install_requires=[],
+      #   extras_require={},
       classifiers=[
           'Programming Language :: Python :: 3',
           'Environment :: Console',

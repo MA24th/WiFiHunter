@@ -1,9 +1,11 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
 from .dependency import Dependency
 from ..config import Configuration
-from ..util.process import Process
-from ..util.timer import Timer
+from ..utils.process import Process
+from ..utils.timer import Timer
 
 import os, time, re
 from threading import Thread
@@ -110,7 +112,7 @@ class Aireplay(Thread, Dependency):
                 fid.truncate()
 
             if Configuration.verbose > 1 and lines.strip() != '':
-                from ..util.color import Color
+                from ..utils.color import Color
                 Color.pl('\n{P} [?] aireplay output:\n     %s{W}' % lines.strip().replace('\n', '\n     '))
 
             for line in lines.split('\n'):
@@ -378,7 +380,7 @@ class Aireplay(Thread, Dependency):
         if out.strip() == 'Wrote packet to: %s' % forged_file:
             return forged_file
         else:
-            from ..util.color import Color
+            from ..utils.color import Color
             Color.pl('{!} {R}failed to forge packet from .xor file{W}')
             Color.pl('output:\n"%s"' % out)
             return None
