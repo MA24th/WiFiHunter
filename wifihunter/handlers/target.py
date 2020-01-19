@@ -3,7 +3,7 @@ import re
 # Date: JAN 1, 2020
 # Email: ma24th@yahoo.com
 
-from ..utils.color import Color
+from .color import Color
 
 
 class WPSState:
@@ -78,7 +78,7 @@ class Target(object):
         if self.channel == '-1':
             raise Exception('Ignoring target with Negative-One (-1) channel')
 
-        # Filter broadcast/multicast BSSIDs, see https://github.com/derv82/wifite2/issues/32
+        # Filter broadcast/multicast BSSIDs
         bssid_broadcast = re.compile(
             r'^(ff:ff:ff:ff:ff:ff|00:00:00:00:00:00)$', re.IGNORECASE)
         if bssid_broadcast.match(self.bssid):

@@ -6,13 +6,13 @@ import os
 
 from json import loads
 from ..config import Configuration
-from ..handlers.handshake import Handshake
-from ..handlers.result import CrackResultWPA
+from .handshake import Handshake
+from .result import CrackResultWPA
 
-from ..handlers.result import CrackResultPMKID
-from ..utils.process import Process
-from ..utils.color import Color
-from ..utils.input import raw_input
+from .result import CrackResultPMKID
+from .process import Process
+from .color import Color
+from .input import raw_input
 
 from ..plugins.aircrack import Aircrack
 from ..plugins.cowpatty import Cowpatty

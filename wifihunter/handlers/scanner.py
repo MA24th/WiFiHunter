@@ -4,12 +4,12 @@ from time import sleep, time
 # Email: ma24th@yahoo.com
 
 from ..plugins.airodump import Airodump
-from ..utils.input import raw_input, xrange
-from ..handlers.target import Target, WPSState
+from .input import raw_input, xrange
+from .target import Target, WPSState
 from ..config import Configuration
 
-from ..utils.color import Color
-from ..utils.process import Process
+from .color import Color
+from .process import Process
 
 
 class Scanner(object):

@@ -3,17 +3,14 @@ import os
 # Date: JAN 1, 2020
 # Email: ma24th@yahoo.com
 
-# 
-# 
-from .utils.color import Color
+
+from .handlers.color import Color
 from .plugins.macchanger import Macchanger
 
-
-
 class Configuration(object):
-    ''' Stores configuration variables and functions for Wifite. '''
-    version = '2.2.5'
+    ''' Stores configuration variables and functions '''
 
+    version = '1.0.0'
     initialized = False # Flag indicating config has been initialized
     temp_dir = None     # Temporary directory
     interface = None
@@ -79,7 +76,7 @@ class Configuration(object):
         cls.wpa_filter = False # Only attack WPA networks
         cls.wpa_deauth_timeout = 15 # Wait time between deauths
         cls.wpa_attack_timeout = 500 # Wait time before failing
-        cls.wpa_handshake_dir = 'hs' # Dir to store handshakes
+        cls.wpa_handshake_dir = 'wifihunter-workspace' # Dir to store handshakes
         cls.wpa_strip_handshake = False # Strip non-handshake packets
         cls.ignore_old_handshakes = False # Always fetch a new handshake
 
@@ -88,7 +85,7 @@ class Configuration(object):
         cls.pmkid_timeout = 30  # Time to wait for PMKID capture
 
         # Default dictionary for cracking
-        cls.cracked_file = 'cracked.txt'
+        cls.cracked_file = 'wifihunter-workspace/cracked.txt'
         cls.wordlist = None
         wordlists = [
             './wordlist-top4800-probable.txt',  # Local file (ran from cloned repo)
@@ -141,7 +138,7 @@ class Configuration(object):
     def load_from_arguments(cls):
         ''' Sets configuration values based on Argument.args object '''
         
-        from .args import Arguments
+        from .handlers.args import Arguments
         args = Arguments(cls).args
         cls.parse_settings_args(args)
         cls.parse_wep_args(args)
@@ -292,13 +289,13 @@ class Configuration(object):
         if args.wordlist:
             if not os.path.exists(args.wordlist):
                 cls.wordlist = None
-                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} was not found, wifite will NOT attempt to crack handshakes' % args.wordlist)
+                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} was not found, wifihunter will NOT attempt to crack handshakes' % args.wordlist)
             elif os.path.isfile(args.wordlist):
                 cls.wordlist = args.wordlist
                 Color.pl('{+} {C}option:{W} using wordlist {G}%s{W} to crack WPA handshakes' % args.wordlist)
             elif os.path.isdir(args.wordlist):
                 cls.wordlist = None
-                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} is a directory, not a file. Wifite will NOT attempt to crack handshakes' % args.wordlist)
+                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} is a directory, not a file. wifihunter will NOT attempt to crack handshakes' % args.wordlist)
 
         if args.wpa_deauth_timeout:
             cls.wpa_deauth_timeout = args.wpa_deauth_timeout
@@ -456,7 +453,7 @@ class Configuration(object):
     def create_temp():
         ''' Creates and returns a temporary directory '''
         from tempfile import mkdtemp
-        tmp = mkdtemp(prefix='wifite')
+        tmp = mkdtemp(prefix='wifihunter')
         if not tmp.endswith(os.sep):
             tmp += os.sep
         return tmp

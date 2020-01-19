@@ -9,10 +9,10 @@ import signal
 from .dependency import Dependency
 from .ifconfig import Ifconfig
 from .iwconfig import Iwconfig
-from ..utils.process import Process
+from ..handlers.process import Process
 
-from ..utils.color import Color
-from ..utils.input import raw_input
+from ..handlers.color import Color
+from ..handlers.input import raw_input
 from ..config import Configuration
 
 
@@ -353,7 +353,7 @@ class Airmon(Dependency):
                 for pid, pname in pid_pnames
             ])
             Color.pl('{!} {O}Conflicting processes: %s' % names_and_pids)
-            Color.pl('{!} {O}If you have problems: {R}kill -9 PID{O} or re-run wifite with {R}--kill{O}){W}')
+            Color.pl('{!} {O}If you have problems: {R}kill -9 PID{O} or re-run wifihunter with {R}--kill{O}){W}')
             return
 
         Color.pl('{!} {O}Killing {R}%d {O}conflicting processes' % len(pid_pnames))

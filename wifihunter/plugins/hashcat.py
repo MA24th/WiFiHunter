@@ -4,8 +4,8 @@
 
 from .dependency import Dependency
 from ..config import Configuration
-from ..utils.process import Process
-from ..utils.color import Color
+from ..handlers.process import Process
+from ..handlers.color import Color
 
 import os
 

@@ -5,7 +5,7 @@ import os
 
 import time
 from json import loads, dumps
-from wifihunter.utils.color import Color
+from .color import Color
 from wifihunter.config import Configuration
 
 

@@ -13,7 +13,7 @@ def read(filename):
 
 setup(name='wifihunter',
       version='1.0.0',
-      description='WiFi Penetration ToolKit',
+      description='WiFi Penetration Toolkit',
       long_description=read('README.rst'),
       long_description_content_type="text/x-rst",
       author='Mustafa Asaad',

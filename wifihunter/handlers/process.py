@@ -6,7 +6,7 @@ import time
 import os
 import signal
 from subprocess import Popen, PIPE
-from ..utils.color import Color
+from .color import Color
 
 from ..config import Configuration
 

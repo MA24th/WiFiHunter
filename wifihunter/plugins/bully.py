@@ -6,9 +6,9 @@ from .dependency import Dependency
 from .airodump import Airodump
 from ..handlers.attack import Attack
 from ..handlers.result import CrackResultWPS
-from ..utils.color import Color
-from ..utils.timer import Timer
-from ..utils.process import Process
+from ..handlers.color import Color
+from ..handlers.timer import Timer
+from ..handlers.process import Process
 from ..config import Configuration
 
 import os, time, re

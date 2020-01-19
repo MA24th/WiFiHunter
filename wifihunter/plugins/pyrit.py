@@ -3,7 +3,7 @@
 # Email: ma24th@yahoo.com
 
 from .dependency import Dependency
-from ..utils.process import Process
+from ..handlers.process import Process
 import re
 
 class Pyrit(Dependency):

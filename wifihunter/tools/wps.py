@@ -3,8 +3,8 @@
 # Email: ma24th@yahoo.com
 
 from ..handlers.attack import Attack
-from ..utils.color import Color
-from ..utils.process import Process
+from ..handlers.color import Color
+from ..handlers.process import Process
 from ..config import Configuration
 from ..plugins.bully import Bully
 from ..plugins.reaver import Reaver

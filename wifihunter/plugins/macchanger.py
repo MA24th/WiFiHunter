@@ -4,7 +4,7 @@
 
 from .dependency import Dependency
 from ..plugins.ifconfig import Ifconfig
-from ..utils.color import Color
+from ..handlers.color import Color
 
 
 class Macchanger(Dependency):
@@ -17,7 +17,7 @@ class Macchanger(Dependency):
     @classmethod
     def down_macch_up(cls, iface, options):
         '''Put interface down, run macchanger with options, put interface up'''
-        from ..utils.process import Process
+        from ..handlers.process import Process
 
         Color.clear_entire_line()
         Color.p(
@@ -70,7 +70,7 @@ class Macchanger(Dependency):
 
     @classmethod
     def random(cls):
-        from ..utils.process import Process
+        from ..handlers.process import Process
         if not Process.exists('macchanger'):
             Color.pl('{!} {R}macchanger: {O}not installed')
             return

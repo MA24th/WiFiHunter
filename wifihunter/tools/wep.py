@@ -10,8 +10,8 @@ from ..plugins.aircrack import Aircrack
 
 from ..plugins.ifconfig import Ifconfig
 from ..config import Configuration
-from ..utils.color import Color
-from ..utils.input import raw_input
+from ..handlers.color import Color
+from ..handlers.input import raw_input
 
 from ..handlers.result import CrackResultWEP
 

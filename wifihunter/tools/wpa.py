@@ -9,10 +9,10 @@ from ..plugins.airodump import Airodump
 
 from ..plugins.aireplay import Aireplay
 from ..config import Configuration
-from ..utils.color import Color
-from ..utils.process import Process
+from ..handlers.color import Color
+from ..handlers.process import Process
 
-from ..utils.timer import Timer
+from ..handlers.timer import Timer
 from ..handlers.handshake import Handshake
 from ..handlers.result import CrackResultWPA
 import time

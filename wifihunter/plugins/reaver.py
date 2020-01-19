@@ -8,9 +8,9 @@ from .bully import Bully # for PSK retrieval
 from ..handlers.attack import Attack
 from ..config import Configuration
 from ..handlers.result import CrackResultWPS
-from ..utils.color import Color
-from ..utils.process import Process
-from ..utils.timer import Timer
+from ..handlers.color import Color
+from ..handlers.process import Process
+from ..handlers.timer import Timer
 
 import os, time, re
 
@@ -395,7 +395,7 @@ Cmd : reaver -i wlan0mon -b 08:86:3B:8C:FD:9C -c 11 -s y -vv -p 28097402
 [Reaver Test] [+] AP SSID: 'Test Router'
 '''
 
-    # From vom513 in https://github.com/derv82/wifite2/issues/60
+    
     new_stdout = '''
 [+] Switching wlan1mon to channel 5
 [+] Waiting for beacon from EC:1A:59:37:70:0E

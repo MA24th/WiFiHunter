@@ -11,7 +11,7 @@ class Iwconfig(Dependency):
 
     @classmethod
     def mode(cls, iface, mode_name):
-        from ..utils.process import Process
+        from ..handlers.process import Process
 
         pid = Process(['iwconfig', iface, 'mode', mode_name])
         pid.wait()
@@ -20,7 +20,7 @@ class Iwconfig(Dependency):
 
     @classmethod
     def get_interfaces(cls, mode=None):
-        from ..utils.process import Process
+        from ..handlers.process import Process
 
         interfaces = set()
         iface = ''

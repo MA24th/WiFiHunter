@@ -10,7 +10,7 @@ except (ValueError, ImportError) as e:
     raise Exception(
         'You may need to run wifihunter from the root directory (which includes README.md)', e)
 
-from .utils.color import Color
+from .handlers.color import Color
 
 
 class WiFiHunter(object):
@@ -37,7 +37,7 @@ class WiFiHunter(object):
 
         from .handlers.result import CrackResult
         from .handlers.handshake import Handshake
-        from .utils.crack import CrackHelper
+        from .handlers.crack import CrackHelper
         if Configuration.show_cracked:
             CrackResult.display()
 
@@ -74,7 +74,7 @@ class WiFiHunter(object):
         '''
 
         Color.pl('')
-        from .utils.scanner import Scanner
+        from .handlers.scanner import Scanner
         # Scan
         s = Scanner()
         targets = s.select_targets()

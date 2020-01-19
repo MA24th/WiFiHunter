@@ -3,8 +3,8 @@
 # Email: ma24th@yahoo.com
 
 from .dependency import Dependency
-from ..utils.process import Process
-from ..utils.input import xrange
+from ..handlers.process import Process
+from ..handlers.input import xrange
 from ..config import Configuration
 
 import os
@@ -82,8 +82,8 @@ class Aircrack(Dependency):
 
     @staticmethod
     def crack_handshake(handshake, show_command=False):
-        from ..utils.color import Color
-        from ..utils.timer import Timer
+        from ..handlers.color import Color
+        from ..handlers.timer import Timer
         '''Tries to crack a handshake. Returns WPA key if found, otherwise None.'''
 
         key_file = Configuration.temp('wpakey.txt')

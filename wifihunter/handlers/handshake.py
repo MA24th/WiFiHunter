@@ -1,7 +1,9 @@
-#!/usr/bin/env python3
+# Author: Mustafa Asaad
+# Date: JAN 1, 2020
+# Email: ma24th@yahoo.com
 
-from ..utils.process import Process
-from ..utils.color import Color
+from .process import Process
+from .color import Color
 from ..plugins.tshark import Tshark
 from ..plugins.pyrit import Pyrit
 
@@ -21,7 +23,7 @@ class Handshake(object):
             Sets this instances 'bssid' and 'essid' instance fields.
         '''
 
-        # We can get BSSID from the .cap filename if Wifite captured it.
+        # We can get BSSID from the .cap filename if wifihunter captured it.
         # ESSID is stripped of non-printable characters, so we can't rely on that.
         if self.bssid is None:
             hs_regex = re.compile(r'^.*handshake_\w+_([0-9A-F\-]{17})_.*\.cap$', re.IGNORECASE)

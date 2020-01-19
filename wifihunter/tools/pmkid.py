@@ -9,12 +9,12 @@ from ..handlers.attack import Attack
 from ..config import Configuration
 
 from ..plugins.hashcat import HcxDumpTool, HcxPcapTool, Hashcat
-from ..utils.color import Color
-from ..utils.timer import Timer
+from ..handlers.color import Color
+from ..handlers.timer import Timer
 from ..handlers.result import CrackResultPMKID
 
 from threading import Thread
-from ..utils.process import Process
+from ..handlers.process import Process
 
 
 class AttackPMKID(Attack):
@@ -157,7 +157,7 @@ class AttackPMKID(Attack):
                     'because there is no {R}wordlist{O} (re-run with {C}--dict{O})')
 
             # TODO: Uncomment once --crack is updated to support recracking PMKIDs.
-            #Color.pl('{!} {O}Run Wifite with the {R}--crack{O} and {R}--dict{O} options to try again.')
+            #Color.pl('{!} {O}Run wifihunter with the {R}--crack{O} and {R}--dict{O} options to try again.')
 
             key = None
         else:

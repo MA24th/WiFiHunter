@@ -4,8 +4,8 @@
 
 from .dependency import Dependency
 from ..config import Configuration
-from ..utils.color import Color
-from ..utils.process import Process
+from ..handlers.color import Color
+from ..handlers.process import Process
 from ..plugins.hashcat import HcxPcapTool
 
 import os

@@ -1,6 +1,10 @@
 # Folders
+.idea
 __pycache__
 wifihunter.egg-info
+wifihunter-workspace
 
 # Files
 data.py
+*.pyc
+cracked.txt

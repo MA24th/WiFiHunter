@@ -4,7 +4,7 @@
 
 from .dependency import Dependency
 from ..handlers.target import WPSState
-from ..utils.process import Process
+from ..handlers.process import Process
 import json
 
 

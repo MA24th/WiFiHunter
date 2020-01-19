@@ -13,7 +13,7 @@ class Ifconfig(Dependency):
     @classmethod
     def up(cls, interface, args=[]):
         '''Put interface up'''
-        from ..utils.process import Process
+        from ..handlers.process import Process
 
         command = ['ifconfig', interface]
         if type(args) is list:
@@ -31,7 +31,7 @@ class Ifconfig(Dependency):
     @classmethod
     def down(cls, interface):
         '''Put interface down'''
-        from ..utils.process import Process
+        from ..handlers.process import Process
 
         pid = Process(['ifconfig', interface, 'down'])
         pid.wait()
@@ -41,7 +41,7 @@ class Ifconfig(Dependency):
 
     @classmethod
     def get_mac(cls, interface):
-        from ..utils.process import Process
+        from ..handlers.process import Process
 
         output = Process(['ifconfig', interface]).stdout()
 
