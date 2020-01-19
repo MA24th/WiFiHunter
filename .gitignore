@@ -3,6 +3,8 @@
 __pycache__
 wifihunter.egg-info
 wifihunter-workspace
+dist
+build
 
 # Files
 data.py
