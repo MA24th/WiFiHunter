@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from setuptools import setup, find_packages
 from io import open
 
@@ -29,6 +30,14 @@ setup(name='wifihunter',
       data_files=[
           ('share/dict', ['wordlist-top4800-probable.txt'])
       ],
+      include_package_data=True,
+      exclude_package_data={"": ["README.md"]},
+      
+    #   install_requires=[
+          
+    #   ],
+      test_suite='pytest',
+      tests_require=['pytest'],
 
       license='GNU GPLv2',
       keywords='wifi penetration toolkit',
