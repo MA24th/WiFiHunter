@@ -22,3 +22,6 @@ sudo python3 install setup.py
 
 ## USEAGE
 
+```bash
+sudo wifihunter --help
+```
