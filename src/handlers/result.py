@@ -6,7 +6,7 @@ import os
 import time
 from json import loads, dumps
 from .color import Color
-from wifihunter.config import Configuration
+from ..config import Configuration
 
 
 class CrackResult(object):
