@@ -24,7 +24,6 @@ class Dependency(object):
     @classmethod
     def run_dependency_check(cls):
         from ..handlers.color import Color
-
         from .airmon import Airmon
         from .airodump import Airodump
         from .aircrack import Aircrack

@@ -28,7 +28,7 @@ class WiFiHunter(object):
             Color.pl('{!} {R}re-run with {O}sudo{W}')
             Configuration.exit_gracefully(0)
 
-        from wifihunter.plugins.dependency import Dependency
+        from .plugins.dependency import Dependency
         Dependency.run_dependency_check()
 
     def start(self):

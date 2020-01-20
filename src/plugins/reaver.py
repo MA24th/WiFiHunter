@@ -4,7 +4,6 @@
 
 from .dependency import Dependency
 from .airodump import Airodump
-from .bully import Bully # for PSK retrieval
 from ..handlers.attack import Attack
 from ..config import Configuration
 from ..handlers.result import CrackResultWPS
@@ -182,6 +181,7 @@ class Reaver(Attack, Dependency):
                 self.pattack('{W}Retrieving PSK using {C}bully{W}...')
                 psk = None
                 try:
+                    from .bully import Bully # for PSK retrieval
                     psk = Bully.get_psk_from_pin(self.target, pin)
                 except KeyboardInterrupt:
                     pass
