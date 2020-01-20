@@ -1,4 +1,4 @@
-from setuptools import setup
+from distutils.core import setup
 from io import open
 
 # Author: Mustafa Asaad
@@ -19,14 +19,26 @@ setup(name='wifihunter',
       author='Mustafa Asaad',
       author_email='ma24th@yahoo.com',
       url='https://github.com/MA24th/WiFiHunter',
-      packages=['wifihunter'],
-      license='GPLv2',
-      keywords='wifi penetration toolkit',
+      packages=['wifihunter',
+                'wifihunter/handlers',
+                'wifihunter/plugins',
+                'wifihunter/tools'
+                ],
       #   install_requires=[],
       #   extras_require={},
+      data_files=[
+          ('share/dict', ['wordlist-top4800-probable.txt'])
+      ],
+      entry_points={
+          'console_scripts': [
+              'wifihunter = wifihunter.wifihunter:entry_point'
+          ]},
+      scripts=['bin/wifihunter'],
+      license='GNU GPLv2',
+      keywords='wifi penetration toolkit',
       classifiers=[
           'Programming Language :: Python :: 3',
           'Environment :: Console',
           'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-      ]
+      ],
       )
