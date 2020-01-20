@@ -1,6 +1,9 @@
 # Folders
 .idea
+.vscode
+.cache*
 __pycache__
+.pytest_cache
 wifihunter.egg-info
 wifihunter-workspace
 dist
