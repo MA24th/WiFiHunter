@@ -301,20 +301,19 @@ class Airmon(Dependency):
             Color.pl('{!} {O}Make sure your wireless device is connected')
             Color.pl('{!} {O}See {C}http://www.aircrack-ng.org/doku.php?id=airmon-ng{O} for more info{W}')
             raise Exception('airmon-ng did not find any wireless interfaces')
-
-        Color.clear_entire_line()
-        a.print_menu()
-
-        Color.pl('')
-
-        if count == 1:
-            # Only one interface, assume this is the one to use
-            choice = 1
         else:
             # Multiple interfaces found
+            Color.clear_entire_line()
+            a.print_menu()
+            Color.pl('')
             question = Color.s('{+} Select wireless interface ({G}1-%d{W}): ' % (count))
             choice = raw_input(question)
-
+        # Color.clear_entire_line()
+        # a.print_menu()
+        # Color.pl('')
+        # if count == 1:
+        #     # Only one interface, assume this is the one to use
+        #     choice = 1
         iface = a.get(choice)
 
         if a.get(choice).interface in monitor_interfaces:
