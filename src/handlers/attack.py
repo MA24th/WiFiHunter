@@ -5,7 +5,7 @@ import time
 
 
 class Attack(object):
-    '''Contains functionality common to all attacks.'''
+    """ Contains functionality common to all attacks """
 
     target_wait = 60
 
@@ -16,7 +16,7 @@ class Attack(object):
         raise Exception('Unimplemented method: run')
 
     def wait_for_target(self, airodump):
-        '''Waits for target to appear in airodump.'''
+        """ Waits for target to appear in airodump """
         start_time = time.time()
         targets = airodump.get_targets(apply_filter=False)
         while len(targets) == 0:

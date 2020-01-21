@@ -7,21 +7,22 @@ import os
 from .handlers.color import Color
 from .plugins.macchanger import Macchanger
 
+
 class Configuration(object):
-    ''' Stores configuration variables and functions '''
+    """ Stores configuration variables and functions """
 
     version = '1.0.0'
-    initialized = False # Flag indicating config has been initialized
-    temp_dir = None     # Temporary directory
+    initialized = False  # Flag indicating config has been initialized
+    temp_dir = None  # Temporary directory
     interface = None
     verbose = 0
 
     @classmethod
     def initialize(cls, load_interface=True):
-        '''
+        """
             Sets up default initial configuration values.
             Also sets config values based on command-line arguments.
-        '''
+        """
         # TODO: categorize configuration into separate classes (under config/*.py)
         # E.g. Configuration.wps.enabled, Configuration.wps.timeout, etc
 
@@ -30,25 +31,25 @@ class Configuration(object):
             return
         cls.initialized = True
 
-        cls.verbose = 0 # Verbosity of output. Higher number means more debug info about running processes.
+        cls.verbose = 0  # Verbosity of output. Higher number means more debug info about running processes.
         cls.print_stack_traces = True
 
         cls.kill_conflicting_processes = False
 
-        cls.scan_time = 0 # Time to wait before attacking all targets
+        cls.scan_time = 0  # Time to wait before attacking all targets
 
-        cls.tx_power = 0 # Wifi transmit power (0 is default)
+        cls.tx_power = 0  # Wifi transmit power (0 is default)
         cls.interface = None
-        cls.target_channel = None # User-defined channel to scan
-        cls.target_essid = None # User-defined AP name
-        cls.target_bssid = None # User-defined AP BSSID
-        cls.ignore_essid = None # ESSIDs to ignore
-        cls.clients_only = False # Only show targets that have associated clients
-        cls.five_ghz = False # Scan 5Ghz channels
-        cls.show_bssids = False # Show BSSIDs in targets list
-        cls.random_mac = False # Should generate a random Mac address at startup.
-        cls.no_deauth = False # Deauth hidden networks & WPA handshake targets
-        cls.num_deauths = 1 # Number of deauth packets to send to each target.
+        cls.target_channel = None  # User-defined channel to scan
+        cls.target_essid = None  # User-defined AP name
+        cls.target_bssid = None  # User-defined AP BSSID
+        cls.ignore_essid = None  # ESSIDs to ignore
+        cls.clients_only = False  # Only show targets that have associated clients
+        cls.five_ghz = False  # Scan 5Ghz channels
+        cls.show_bssids = False  # Show BSSIDs in targets list
+        cls.random_mac = False  # Should generate a random Mac address at startup.
+        cls.no_deauth = False  # Deauth hidden networks & WPA handshake targets
+        cls.num_deauths = 1  # Number of deauth packets to send to each target.
 
         cls.encryption_filter = ['WEP', 'WPA', 'WPS']
 
@@ -59,26 +60,26 @@ class Configuration(object):
         cls.eviltwin_fakeap_iface = None
 
         # WEP variables
-        cls.wep_filter = False # Only attack WEP networks
-        cls.wep_pps = 600 # Packets per second
-        cls.wep_timeout = 600 # Seconds to wait before failing
-        cls.wep_crack_at_ivs = 10000 # Minimum IVs to start cracking
+        cls.wep_filter = False  # Only attack WEP networks
+        cls.wep_pps = 600  # Packets per second
+        cls.wep_timeout = 600  # Seconds to wait before failing
+        cls.wep_crack_at_ivs = 10000  # Minimum IVs to start cracking
         cls.require_fakeauth = False
-        cls.wep_restart_stale_ivs = 11 # Seconds to wait before restarting
-                                                 # Aireplay if IVs don't increaes.
-                                                 # '0' means never restart.
+        cls.wep_restart_stale_ivs = 11  # Seconds to wait before restarting
+        # Aireplay if IVs don't increaes.
+        # '0' means never restart.
         cls.wep_restart_aircrack = 30  # Seconds to give aircrack to crack
-                                                 # before restarting the process.
-        cls.wep_crack_at_ivs = 10000   # Number of IVS to start cracking
-        cls.wep_keep_ivs = False       # Retain .ivs files across multiple attacks.
+        # before restarting the process.
+        cls.wep_crack_at_ivs = 10000  # Number of IVS to start cracking
+        cls.wep_keep_ivs = False  # Retain .ivs files across multiple attacks.
 
         # WPA variables
-        cls.wpa_filter = False # Only attack WPA networks
-        cls.wpa_deauth_timeout = 15 # Wait time between deauths
-        cls.wpa_attack_timeout = 500 # Wait time before failing
-        cls.wpa_handshake_dir = 'wifihunter-workspace' # Dir to store handshakes
-        cls.wpa_strip_handshake = False # Strip non-handshake packets
-        cls.ignore_old_handshakes = False # Always fetch a new handshake
+        cls.wpa_filter = False  # Only attack WPA networks
+        cls.wpa_deauth_timeout = 15  # Wait time between deauths
+        cls.wpa_attack_timeout = 500  # Wait time before failing
+        cls.wpa_handshake_dir = 'wifihunter-workspace'  # Dir to store handshakes
+        cls.wpa_strip_handshake = False  # Strip non-handshake packets
+        cls.ignore_old_handshakes = False  # Always fetch a new handshake
 
         # PMKID variables
         cls.use_pmkid_only = False  # Only use PMKID Capture+Crack attack
@@ -102,15 +103,15 @@ class Configuration(object):
                 break
 
         # WPS variables
-        cls.wps_filter  = False  # Only attack WPS networks
-        cls.no_wps      = False  # Do not use WPS attacks (Pixie-Dust & PIN attacks)
-        cls.wps_only    = False  # ONLY use WPS attacks on non-WEP networks
-        cls.use_bully   = False  # Use bully instead of reaver
-        cls.wps_pixie   = True
-        cls.wps_pin     = True
+        cls.wps_filter = False  # Only attack WPS networks
+        cls.no_wps = False  # Do not use WPS attacks (Pixie-Dust & PIN attacks)
+        cls.wps_only = False  # ONLY use WPS attacks on non-WEP networks
+        cls.use_bully = False  # Use bully instead of reaver
+        cls.wps_pixie = True
+        cls.wps_pin = True
         cls.wps_ignore_lock = False  # Skip WPS PIN attack if AP is locked.
-        cls.wps_pixie_timeout = 300      # Seconds to wait for PIN before WPS Pixie attack fails
-        cls.wps_fail_threshold = 100     # Max number of failures
+        cls.wps_pixie_timeout = 300  # Seconds to wait for PIN before WPS Pixie attack fails
+        cls.wps_fail_threshold = 100  # Max number of failures
         cls.wps_timeout_threshold = 100  # Max number of timeouts
 
         # Commands
@@ -124,7 +125,6 @@ class Configuration(object):
         if load_interface:
             cls.get_monitor_mode_interface()
 
-
     @classmethod
     def get_monitor_mode_interface(cls):
         if cls.interface is None:
@@ -137,7 +137,7 @@ class Configuration(object):
     @classmethod
     def load_from_arguments(cls):
         ''' Sets configuration values based on Argument.args object '''
-        
+
         from .handlers.args import Arguments
         args = Arguments(cls).args
         cls.parse_settings_args(args)
@@ -163,13 +163,11 @@ class Configuration(object):
         if args.check_handshake: cls.check_handshake = args.check_handshake
         if args.crack_handshake: cls.crack_handshake = True
 
-
     @classmethod
     def validate(cls):
-        if cls.use_pmkid_only and cls.wps_only:  
+        if cls.use_pmkid_only and cls.wps_only:
             Color.pl('{!} {R}Bad Configuration:{O} --pmkid and --wps-only are not compatible')
             raise RuntimeError('Unable to attack networks: --pmkid and --wps-only are not compatible together')
-
 
     @classmethod
     def parse_settings_args(cls, args):
@@ -177,22 +175,22 @@ class Configuration(object):
         if args.random_mac:
             cls.random_mac = True
             Color.pl('{+} {C}option:{W} using {G}random mac address{W} ' +
-                    'when scanning & attacking')
+                     'when scanning & attacking')
 
         if args.channel:
             cls.target_channel = args.channel
             Color.pl('{+} {C}option:{W} scanning for targets on channel ' +
-                    '{G}%s{W}' % args.channel)
+                     '{G}%s{W}' % args.channel)
 
         if args.interface:
             cls.interface = args.interface
             Color.pl('{+} {C}option:{W} using wireless interface ' +
-                    '{G}%s{W}' % args.interface)
+                     '{G}%s{W}' % args.interface)
 
         if args.target_bssid:
             cls.target_bssid = args.target_bssid
             Color.pl('{+} {C}option:{W} targeting BSSID ' +
-                    '{G}%s{W}' % args.target_bssid)
+                     '{G}%s{W}' % args.target_bssid)
 
         if args.five_ghz == True:
             cls.five_ghz = True
@@ -205,7 +203,7 @@ class Configuration(object):
         if args.no_deauth == True:
             cls.no_deauth = True
             Color.pl('{+} {C}option:{W} will {R}not{W} {O}deauth{W} clients ' +
-                    'during scans or captures')
+                     'during scans or captures')
 
         if args.num_deauths and args.num_deauths > 0:
             cls.num_deauths = args.num_deauths
@@ -224,12 +222,12 @@ class Configuration(object):
         if args.clients_only == True:
             cls.clients_only = True
             Color.pl('{+} {C}option:{W} {O}ignoring targets that do not have ' +
-                'associated clients')
+                     'associated clients')
 
         if args.scan_time:
             cls.scan_time = args.scan_time
             Color.pl('{+} {C}option:{W} ({G}pillage{W}) attack all targets ' +
-                'after {G}%d{W}s' % args.scan_time)
+                     'after {G}%d{W}s' % args.scan_time)
 
         if args.verbose:
             cls.verbose = args.verbose
@@ -238,7 +236,6 @@ class Configuration(object):
         if args.kill_conflicting_processes:
             cls.kill_conflicting_processes = True
             Color.pl('{+} {C}option:{W} kill conflicting processes {G}enabled{W}')
-
 
     @classmethod
     def parse_wep_args(cls, args):
@@ -254,27 +251,27 @@ class Configuration(object):
         if args.wep_timeout:
             cls.wep_timeout = args.wep_timeout
             Color.pl('{+} {C}option:{W} WEP attack timeout set to ' +
-                '{G}%d seconds{W}' % args.wep_timeout)
+                     '{G}%d seconds{W}' % args.wep_timeout)
 
         if args.require_fakeauth:
             cls.require_fakeauth = True
             Color.pl('{+} {C}option:{W} fake-authentication is ' +
-                '{G}required{W} for WEP attacks')
+                     '{G}required{W} for WEP attacks')
 
         if args.wep_crack_at_ivs:
             cls.wep_crack_at_ivs = args.wep_crack_at_ivs
             Color.pl('{+} {C}option:{W} will start cracking WEP keys at ' +
-                '{G}%d IVs{W}' % args.wep_crack_at_ivs)
+                     '{G}%d IVs{W}' % args.wep_crack_at_ivs)
 
         if args.wep_restart_stale_ivs:
             cls.wep_restart_stale_ivs = args.wep_restart_stale_ivs
             Color.pl('{+} {C}option:{W} will restart aireplay after ' +
-                '{G}%d seconds{W} of no new IVs' % args.wep_restart_stale_ivs)
+                     '{G}%d seconds{W} of no new IVs' % args.wep_restart_stale_ivs)
 
         if args.wep_restart_aircrack:
             cls.wep_restart_aircrack = args.wep_restart_aircrack
             Color.pl('{+} {C}option:{W} will restart aircrack every ' +
-                '{G}%d seconds{W}' % args.wep_restart_aircrack)
+                     '{G}%d seconds{W}' % args.wep_restart_aircrack)
 
         if args.wep_keep_ivs:
             cls.wep_keep_ivs = args.wep_keep_ivs
@@ -289,33 +286,35 @@ class Configuration(object):
         if args.wordlist:
             if not os.path.exists(args.wordlist):
                 cls.wordlist = None
-                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} was not found, wifihunter will NOT attempt to crack handshakes' % args.wordlist)
+                Color.pl(
+                    '{+} {C}option:{O} wordlist {R}%s{O} was not found, wifihunter will NOT attempt to crack handshakes' % args.wordlist)
             elif os.path.isfile(args.wordlist):
                 cls.wordlist = args.wordlist
                 Color.pl('{+} {C}option:{W} using wordlist {G}%s{W} to crack WPA handshakes' % args.wordlist)
             elif os.path.isdir(args.wordlist):
                 cls.wordlist = None
-                Color.pl('{+} {C}option:{O} wordlist {R}%s{O} is a directory, not a file. wifihunter will NOT attempt to crack handshakes' % args.wordlist)
+                Color.pl(
+                    '{+} {C}option:{O} wordlist {R}%s{O} is a directory, not a file. wifihunter will NOT attempt to crack handshakes' % args.wordlist)
 
         if args.wpa_deauth_timeout:
             cls.wpa_deauth_timeout = args.wpa_deauth_timeout
             Color.pl('{+} {C}option:{W} will deauth WPA clients every ' +
-                    '{G}%d seconds{W}' % args.wpa_deauth_timeout)
+                     '{G}%d seconds{W}' % args.wpa_deauth_timeout)
 
         if args.wpa_attack_timeout:
             cls.wpa_attack_timeout = args.wpa_attack_timeout
             Color.pl('{+} {C}option:{W} will stop WPA handshake capture after ' +
-                    '{G}%d seconds{W}' % args.wpa_attack_timeout)
+                     '{G}%d seconds{W}' % args.wpa_attack_timeout)
 
         if args.ignore_old_handshakes:
             cls.ignore_old_handshakes = True
             Color.pl('{+} {C}option:{W} will {O}ignore{W} existing handshakes ' +
-                    '(force capture)')
+                     '(force capture)')
 
         if args.wpa_handshake_dir:
             cls.wpa_handshake_dir = args.wpa_handshake_dir
             Color.pl('{+} {C}option:{W} will store handshakes to ' +
-                    '{G}%s{W}' % args.wpa_handshake_dir)
+                     '{G}%s{W}' % args.wpa_handshake_dir)
 
         if args.wpa_strip_handshake:
             cls.wpa_strip_handshake = True
@@ -331,7 +330,7 @@ class Configuration(object):
             cls.wps_only = True
             cls.wps_filter = True  # Also only show WPS networks
             Color.pl('{+} {C}option:{W} will *only* attack WPS networks with ' +
-                    '{G}WPS attacks{W} (avoids handshake and PMKID)')
+                     '{G}WPS attacks{W} (avoids handshake and PMKID)')
 
         if args.no_wps:
             # No WPS attacks at all
@@ -339,21 +338,21 @@ class Configuration(object):
             cls.wps_pixie = False
             cls.wps_pin = False
             Color.pl('{+} {C}option:{W} will {O}never{W} use {C}WPS attacks{W} ' +
-                    '(Pixie-Dust/PIN) on targets')
+                     '(Pixie-Dust/PIN) on targets')
 
         elif args.wps_pixie:
             # WPS Pixie-Dust only
             cls.wps_pixie = True
             cls.wps_pin = False
             Color.pl('{+} {C}option:{W} will {G}only{W} use {C}WPS Pixie-Dust ' +
-                    'attack{W} (no {O}PIN{W}) on targets')
+                     'attack{W} (no {O}PIN{W}) on targets')
 
         elif args.wps_no_pixie:
             # WPS PIN only
             cls.wps_pixie = False
             cls.wps_pin = True
             Color.pl('{+} {C}option:{W} will {G}only{W} use {C}WPS PIN attack{W} ' +
-                    '(no {O}Pixie-Dust{W}) on targets')
+                     '(no {O}Pixie-Dust{W}) on targets')
 
         if args.use_bully:
             from .plugins.bully import Bully
@@ -363,22 +362,22 @@ class Configuration(object):
             else:
                 cls.use_bully = args.use_bully
                 Color.pl('{+} {C}option:{W} use {C}bully{W} instead of {C}reaver{W} ' +
-                        'for WPS Attacks')
+                         'for WPS Attacks')
 
         if args.wps_pixie_timeout:
             cls.wps_pixie_timeout = args.wps_pixie_timeout
             Color.pl('{+} {C}option:{W} WPS pixie-dust attack will fail after ' +
-                    '{O}%d seconds{W}' % args.wps_pixie_timeout)
+                     '{O}%d seconds{W}' % args.wps_pixie_timeout)
 
         if args.wps_fail_threshold:
             cls.wps_fail_threshold = args.wps_fail_threshold
             Color.pl('{+} {C}option:{W} will stop WPS attack after ' +
-                    '{O}%d failures{W}' % args.wps_fail_threshold)
+                     '{O}%d failures{W}' % args.wps_fail_threshold)
 
         if args.wps_timeout_threshold:
             cls.wps_timeout_threshold = args.wps_timeout_threshold
             Color.pl('{+} {C}option:{W} will stop WPS attack after ' +
-                    '{O}%d timeouts{W}' % args.wps_timeout_threshold)
+                     '{O}%d timeouts{W}' % args.wps_timeout_threshold)
 
         if args.wps_ignore_lock:
             cls.wps_ignore_lock = True
@@ -410,7 +409,7 @@ class Configuration(object):
         else:
             Color.pl('{+} {C}option:{W} ' +
                      'targeting {G}%s-encrypted{W} networks'
-                        % '/'.join(cls.encryption_filter))
+                     % '/'.join(cls.encryption_filter))
 
     @classmethod
     def parse_wep_attacks(cls):
@@ -431,16 +430,15 @@ class Configuration(object):
         if len(cls.wep_attacks) == 0:
             # Use all attacks
             cls.wep_attacks = ['replay',
-                'fragment',
-                'chopchop',
-                'caffelatte',
-                'p0841',
-                'hirte'
-            ]
+                               'fragment',
+                               'chopchop',
+                               'caffelatte',
+                               'p0841',
+                               'hirte'
+                               ]
         elif len(cls.wep_attacks) > 0:
             Color.pl('{+} {C}option:{W} using {G}%s{W} WEP attacks'
-                % '{W}, {G}'.join(cls.wep_attacks))
-
+                     % '{W}, {G}'.join(cls.wep_attacks))
 
     @classmethod
     def temp(cls, subfile=''):
@@ -467,7 +465,6 @@ class Configuration(object):
                 os.remove(cls.temp_dir + f)
             os.rmdir(cls.temp_dir)
 
-
     @classmethod
     def exit_gracefully(cls, code=0):
         ''' Deletes temp and exist with the given code '''
@@ -477,36 +474,36 @@ class Configuration(object):
         if cls.interface is not None and Airmon.base_interface is not None:
             Color.pl('{!} {O}Note:{W} Leaving interface in Monitor Mode!')
             Color.pl('{!} To disable Monitor Mode when finished: ' +
-                    '{C}airmon-ng stop %s{W}' % cls.interface)
+                     '{C}airmon-ng stop %s{W}' % cls.interface)
 
             # Stop monitor mode
-            #Airmon.stop(cls.interface)
+            # Airmon.stop(cls.interface)
             # Bring original interface back up
-            #Airmon.put_interface_up(Airmon.base_interface)
+            # Airmon.put_interface_up(Airmon.base_interface)
 
         if Airmon.killed_network_manager:
             Color.pl('{!} You can restart NetworkManager when finished ({C}service network-manager start{W})')
-            #Airmon.start_network_manager()
+            # Airmon.start_network_manager()
 
         exit(code)
 
     @classmethod
     def dump(cls):
         ''' (Colorful) string representation of the configuration '''
-        
 
         max_len = 20
         for key in cls.__dict__.keys():
             max_len = max(max_len, len(key))
 
-        result  = Color.s('{W}%s  Value{W}\n' % 'cls Key'.ljust(max_len))
+        result = Color.s('{W}%s  Value{W}\n' % 'cls Key'.ljust(max_len))
         result += Color.s('{W}%s------------------{W}\n' % ('-' * max_len))
 
-        for (key,val) in sorted(cls.__dict__.items()):
+        for (key, val) in sorted(cls.__dict__.items()):
             if key.startswith('__') or type(val) in [classmethod, staticmethod] or val is None:
                 continue
-            result += Color.s('{G}%s {W} {C}%s{W}\n' % (key.ljust(max_len),val))
+            result += Color.s('{G}%s {W} {C}%s{W}\n' % (key.ljust(max_len), val))
         return result
+
 
 if __name__ == '__main__':
     Configuration.initialize(False)

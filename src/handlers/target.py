@@ -11,9 +11,9 @@ class WPSState:
 
 
 class Target(object):
-    '''
+    """
         Holds details for a 'Target' aka Access Point (e.g. router).
-    '''
+    """
 
     def __init__(self, fields):
         '''
