@@ -1,6 +1,7 @@
 # WiFiHunter
 [![GPLv2 license](https://img.shields.io/badge/LICENSE-GPLv2-green)](https://github.com/ma24th/WiFiHunter/blob/master/LICENSE)
-[![Build Status](https://travis-ci.com/ma24th/WiFiHunter.svg?branch=master)](https://travis-ci.com/ma24th/WiFiHunter)
+![Python package](https://github.com/MA24th/wifihunter/workflows/Python%20package/badge.svg)
+![Upload Python Package](https://github.com/MA24th/wifihunter/workflows/Upload%20Python%20Package/badge.svg)
 [![PyPI](https://img.shields.io/badge/PyPI-v1.0.0-blue.svg)](https://pypi.org/project/wifihunter/)
 [![Discord Server](https://img.shields.io/badge/Discord-Server-blue.svg)](https://discord.gg/g65AqbPK6g)
 
