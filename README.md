@@ -4,7 +4,7 @@
 [![PyPI](https://img.shields.io/badge/PyPI-v1.0.0-blue.svg)](https://pypi.org/project/wifihunter/)
 [![Telegram Group](https://img.shields.io/badge/Telegram-Group-blue.svg)](https://telegram.me/@grid9x)
 
-A WiFi Penetration Toolkit, 
+The WiFi Penetration Toolkit, 
 Run on existing wireless-auditing tools for you,
 Stop memorizing command arguments & switches!
 
