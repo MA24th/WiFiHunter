@@ -32,8 +32,6 @@ sudo python3 install setup.py
 sudo wifihunter --help
 ```
 
-This is MA24th Open Source Software Agreement
-=============================================
 
 ## How to contribute
 - You must follow [Contributing](https://github.com/MA24th/MA24th/blob/main/OpenSource/Software/CONTRIBUTING.md) Guidelines.
