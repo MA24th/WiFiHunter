@@ -18,15 +18,15 @@ It's designed to use all known methods for retrieving the password of a wireless
 
 
 
-#### INSTALLING
+## How to install
 ```bash
 git clone https://github.com/MA24th/WiFiHunter.git
 cd WiFiHunter
-sudo python3 install setup.py
+sudo python3 setup.py install
 ```
 
 
-#### USEAGE
+## How to use
 
 ```bash
 sudo wifihunter --help
