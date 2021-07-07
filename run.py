@@ -5,8 +5,8 @@
 # Email: ma24th@yahoo.com
 
 try:
-    from src import __main__
+    from wifihunter import __main__
 except (ImportError) as e:
     raise Exception('You may need to reinstall wifihunter)', e)
 
-__main__.entry_point()
+__main__.start()

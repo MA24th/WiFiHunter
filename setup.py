@@ -24,9 +24,9 @@ setup(name='wifihunter',
       packages=find_packages(),
       entry_points={
           'console_scripts': [
-              'wifihunter = src.__main__:entry_point'
+              'wifihunter = wifihunter.__main__:start'
               ]},
-      scripts=['bin/wifihunter.py'],
+      scripts=['bin/wifihunter'],
       data_files=[
           ('share/dict', ['wordlist-top4800-probable.txt'])
       ],
