@@ -18,7 +18,7 @@ It's designed to use all known methods for retrieving the password of a wireless
 
 
 
-## How to install
+## How to Install
 ```bash
 git clone https://github.com/MA24th/WiFiHunter.git
 cd WiFiHunter
@@ -26,14 +26,14 @@ sudo python3 setup.py install
 ```
 
 
-## How to use
+## How to Use
 
 ```bash
 sudo wifihunter --help
 ```
 
 
-## How to contribute
+## How to Contribute
 - You must follow [Contributing](https://github.com/MA24th/MA24th/blob/main/OpenSource/Software/CONTRIBUTING.md) Guidelines.
 - We are committed to providing a friendly community, for more experience read [Code Of Conduct](https://github.com/MA24th/MA24th/blob/main/OpenSource/Software/CODE_OF_CONDUCT.md).
 
@@ -44,7 +44,7 @@ discuss bugs and such, Check [Communication](https://github.com/MA24th/MA24th/bl
 
 
 ## Frequently Asked Questions
-You must check [FAQ](https://github.com/MA24th/MA24th/blob/main/OpenSource/Software/FAQ.md) before asking questions.
+Click on [FAQ](https://github.com/MA24th/MA24th/blob/main/OpenSource/Software/FAQ.md) before asking questions.
 
 
 ## Attribution
