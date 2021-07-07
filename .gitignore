@@ -2,6 +2,7 @@
 .idea
 .vscode
 .cache*
+.venv*
 __pycache__
 .pytest_cache
 wifihunter.egg-info
