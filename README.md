@@ -1,7 +1,7 @@
 # WiFiHunter
 [![GPLv2 license](https://img.shields.io/badge/LICENSE-GPLv2-green)](https://github.com/ma24th/WiFiHunter/blob/master/LICENSE)
-![Python package](https://github.com/MA24th/wifihunter/workflows/Python%20package/badge.svg)
-![Upload Python Package](https://github.com/MA24th/wifihunter/workflows/Upload%20Python%20Package/badge.svg)
+[![Python application](https://github.com/MA24th/WiFiHunter/actions/workflows/python-app.yml/badge.svg)](https://github.com/MA24th/WiFiHunter/actions/workflows/python-app.yml)
+[![Upload Python Package](https://github.com/MA24th/WiFiHunter/actions/workflows/python-publish.yml/badge.svg)](https://github.com/MA24th/WiFiHunter/actions/workflows/python-publish.yml)
 [![PyPI](https://img.shields.io/badge/PyPI-v1.0.0-blue.svg)](https://pypi.org/project/wifihunter/)
 [![Discord Server](https://img.shields.io/badge/Discord-Server-blue.svg)](https://discord.gg/g65AqbPK6g)
 
