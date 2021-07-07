@@ -110,10 +110,3 @@ class Color(object):
             err = err.replace('  File', '{W}File')
             err = err.replace('  Exception: ', '{R}Exception: {O}')
             Color.pl(err)
-
-
-if __name__ == '__main__':
-    Color.pl('{R}Testing{G}One{C}Two{P}Three{W}Done')
-    print(Color.s('{C}Testing{P}String{W}'))
-    Color.pl('{+} Good line')
-    Color.pl('{!} Danger')
