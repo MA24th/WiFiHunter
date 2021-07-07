@@ -19,12 +19,16 @@ It's designed to use all known methods for retrieving the password of a wireless
 
 
 ## How to Install
+from source code 
 ```bash
 git clone https://github.com/MA24th/WiFiHunter.git
 cd WiFiHunter
 sudo python3 setup.py install
 ```
-
+Or from PyPI
+```bash
+pip install wifihunter
+```
 
 ## How to Use
 
