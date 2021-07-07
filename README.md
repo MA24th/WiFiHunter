@@ -54,4 +54,4 @@ For more information [contact me](mailto:ma24th@yahoo.com) with any additional q
 
 ## License
 Copyright (c) MA24th Software. All rights reserved.
-Licensed under the [GPLv2 license](https://opensource.org/licenses/gpl-2.0) License.
+Licensed under the [GPLv2](https://opensource.org/licenses/gpl-2.0) License.
