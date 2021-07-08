@@ -3,6 +3,7 @@
 .vscode
 .cache*
 .venv*
+.tox*
 __pycache__
 .pytest_cache
 wifihunter.egg-info
