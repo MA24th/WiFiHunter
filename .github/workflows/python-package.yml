@@ -53,7 +53,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo python -m pip install --upgrade pip
-        sudo python -m pip install flake8 pytest 
+        sudo python -m pip install flake8 pytest pylint
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
