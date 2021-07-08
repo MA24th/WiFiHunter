@@ -205,10 +205,10 @@ class Handshake(object):
             Color.pl('{+} checking all handshakes in {G}"./hs"{W} directory\n')
             try:
                 capfiles = [os.path.join('hs', x) for x in os.listdir('hs') if x.endswith('.cap')]
-            except OSError as e:
+            except OSError:
                 capfiles = []
             if len(capfiles) == 0:
-                Color.pl('{!} {R}no .cap files found in {O}"./hs"{W}\n', e)
+                Color.pl('{!} {R}no .cap files found in {O}"./hs"{W}\n')
         else:
             capfiles = [Configuration.check_handshake]
 
